@@ -14,6 +14,7 @@ sdk
 logs
 
 chat
+*.exe
 chat.exe
 
 # for reverse engine
@@ -24,3 +25,10 @@ access/*.json
 db
 redis
 config
+presets
+
+key/*
+!key/.gitkeep
+
+# for https://github.com/di-sukharev/opencommit
+.env

@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"database/sql"
 	"fmt"
+
 	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/mattn/go-sqlite3"
@@ -40,7 +41,7 @@ func getConn() *sql.DB {
 		viper.GetString("mysql.password"),
 		viper.GetString("mysql.host"),
 		viper.GetInt("mysql.port"),
-		viper.GetString("mysql.db"),
+		utils.GetStringConfs("mysql.database", "mysql.db"),
 	)
 	if viper.GetBool("mysql.tls") {
 		mysql.RegisterTLSConfig("tls", &tls.Config{
@@ -184,6 +185,7 @@ func CreateConversationTable(db *sql.DB) {
 		  conversation_name VARCHAR(255),
 		  data MEDIUMTEXT,
 		  model VARCHAR(255) NOT NULL DEFAULT 'gpt-3.5-turbo-0613',
+		  task_id VARCHAR(255) NULL,
 		  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 		  UNIQUE KEY (user_id, conversation_id)
 		);

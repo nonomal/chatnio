@@ -9,7 +9,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NumberInput } from "@/components/ui/number-input.tsx";
 import { Switch } from "@/components/ui/switch.tsx";
 import { Alert, AlertDescription } from "./ui/alert";
@@ -23,13 +23,25 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Calendar } from "@/components/ui/calendar.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
+import { Combobox } from "@/components/ui/combo-box.tsx";
+import { MultiCombobox } from "./ui/multi-combobox";
 
 export enum popupTypes {
   Text = "text",
   Number = "number",
   Switch = "switch",
+  Clock = "clock",
+  List = "list",
+  MultiList = "multi-list",
   Empty = "empty",
 }
+
+type ParamProps = {
+  dataList?: string[];
+  dataListTranslated?: string;
+};
 
 export type PopupDialogProps = {
   title: string;
@@ -38,6 +50,7 @@ export type PopupDialogProps = {
   placeholder?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => string;
+  params?: ParamProps;
   onSubmit?: (value: string) => Promise<boolean>;
   destructive?: boolean;
   disabled?: boolean;
@@ -63,6 +76,7 @@ function PopupField({
   type,
   setValue,
   onValueChange,
+  params,
   value,
   placeholder,
   componentProps,
@@ -79,6 +93,30 @@ function PopupField({
           value={value}
           placeholder={placeholder}
           {...componentProps}
+        />
+      );
+
+    case popupTypes.Clock:
+      return <CalendarComp value={value} onValueChange={(v) => setValue(v)} />;
+
+    case popupTypes.List:
+      return (
+        <Combobox
+          value={value}
+          onChange={(v) => setValue(v)}
+          list={params?.dataList || []}
+          listTranslated={params?.dataListTranslated || ""}
+        />
+      );
+
+    case popupTypes.MultiList:
+      return (
+        <MultiCombobox
+          value={(value || "").split(",")}
+          onChange={(v) => setValue(v.filter((i) => i.trim()).join(","))}
+          list={params?.dataList || []}
+          listTranslate={params?.dataListTranslated || ""}
+          placeholder={placeholder || value || ""}
         />
       );
 
@@ -110,6 +148,151 @@ function PopupField({
     default:
       return null;
   }
+}
+
+function fixedZero(val: number) {
+  return val < 10 ? `0${val}` : val.toString();
+}
+
+function CalendarComp(props: {
+  value: string;
+  onValueChange: (v: string) => void;
+}) {
+  const { value, onValueChange } = props;
+  const { t } = useTranslation();
+
+  const convertedDate = useMemo(() => {
+    const date = new Date(value.split(" ")[0] || "1970-01-01");
+    console.log(`[calendar] converted date:`, date);
+    return date;
+  }, [value]);
+
+  const onDateChange = (date: Date, overrideTime?: boolean) => {
+    const v = `${date.getFullYear()}-${fixedZero(
+      date.getMonth() + 1,
+    )}-${fixedZero(date.getDate())}`;
+    const t = !overrideTime
+      ? value.split(" ")[1] || "00:00:00"
+      : `${fixedZero(date.getHours())}:${fixedZero(
+          date.getMinutes(),
+        )}:${fixedZero(date.getSeconds())}`;
+
+    console.log(`[calendar] clicked date: [${v} ${t}]`);
+    onValueChange(`${v} ${t}`);
+  };
+
+  const [month, setMonth] = useState(convertedDate);
+  useEffect(() => {
+    setMonth(convertedDate);
+  }, [convertedDate]);
+
+  return (
+    <div
+      className={`flex flex-col gap-2 items-center justify-center px-2 w-full h-fit`}
+    >
+      <Calendar
+        className={`scale-90 md:scale-100`}
+        mode="single"
+        month={month}
+        onMonthChange={(date) => date && setMonth(date)}
+        selected={convertedDate}
+        onSelect={(date) => date && onDateChange(date)}
+      />
+      <Input
+        value={value}
+        onChange={(e) => onValueChange(e.target.value)}
+        placeholder={t("date.pick")}
+        className={`w-full text-center`}
+      />
+      <Separator />
+      <div className={`flex flex-row w-full flex-wrap`}>
+        <Button
+          variant={`outline`}
+          className={`m-0.5 shrink-0`}
+          onClick={() => onDateChange(new Date("1970-01-01 00:00:00"), true)}
+        >
+          {t("date.clean")}
+        </Button>
+        <Button
+          variant={`outline`}
+          className={`m-0.5 shrink-0`}
+          onClick={() => onDateChange(new Date(), true)}
+        >
+          {t("date.today")}
+        </Button>
+        <Button
+          variant={`outline`}
+          className={`m-0.5 shrink-0`}
+          onClick={() =>
+            onDateChange(
+              new Date(convertedDate.setDate(convertedDate.getDate() + 1)),
+            )
+          }
+        >
+          {t("date.add-day")}
+        </Button>
+        <Button
+          variant={`outline`}
+          className={`m-0.5 shrink-0`}
+          onClick={() =>
+            onDateChange(
+              new Date(convertedDate.setDate(convertedDate.getDate() - 1)),
+            )
+          }
+        >
+          {t("date.sub-day")}
+        </Button>
+        <Button
+          variant={`outline`}
+          className={`m-0.5 shrink-0`}
+          onClick={() =>
+            onDateChange(
+              new Date(convertedDate.setMonth(convertedDate.getMonth() + 1)),
+            )
+          }
+        >
+          {t("date.add-month")}
+        </Button>
+        <Button
+          variant={`outline`}
+          className={`m-0.5 shrink-0`}
+          onClick={() =>
+            onDateChange(
+              new Date(convertedDate.setMonth(convertedDate.getMonth() - 1)),
+            )
+          }
+        >
+          {t("date.sub-month")}
+        </Button>
+        <Button
+          variant={`outline`}
+          className={`m-0.5 shrink-0`}
+          onClick={() =>
+            onDateChange(
+              new Date(
+                convertedDate.setFullYear(convertedDate.getFullYear() + 1),
+              ),
+            )
+          }
+        >
+          {t("date.add-year")}
+        </Button>
+        <Button
+          variant={`outline`}
+          className={`m-0.5 shrink-0`}
+          onClick={() =>
+            onDateChange(
+              new Date(
+                convertedDate.setFullYear(convertedDate.getFullYear() - 1),
+              ),
+            )
+          }
+        >
+          {t("date.sub-year")}
+        </Button>
+      </div>
+    </div>
+  );
 }
 
 function PopupDialog(props: PopupDialogProps) {
@@ -154,10 +337,15 @@ function PopupDialog(props: PopupDialogProps) {
           </Alert>
         )}
         <DialogFooter>
-          <Button variant={`outline`} onClick={() => setOpen(false)}>
+          <Button
+            unClickable
+            variant={`outline`}
+            onClick={() => setOpen(false)}
+          >
             {cancelLabel || t("cancel")}
           </Button>
           <Button
+            unClickable
             disabled={disabled}
             variant={destructive ? `destructive` : `default`}
             loading={true}
@@ -217,6 +405,7 @@ export function PopupAlertDialog({
           <AlertDialogCancel>{cancelLabel || t("cancel")}</AlertDialogCancel>
           <Button
             disabled={disabled}
+            unClickable
             variant={destructive ? `destructive` : `default`}
             loading={true}
             onClick={async () => {

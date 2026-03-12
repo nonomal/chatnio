@@ -73,7 +73,16 @@ export const pricing: PricingDataset = [
     input: 0.005,
     output: 0.015,
   },
-
+  {
+    models: ["gpt-4o-2024-08-06"],
+    input: 0.0025,
+    output: 0.01,
+  },
+  {
+    models: ["gpt-4o-mini", "gpt-4o-mini-2024-07-18"],
+    input: 0.00015,
+    output: 0.0006,
+  },
   {
     models: ["gpt-4-32k", "gpt-4-32k-0314", "gpt-4-32k-0613"],
     input: 0.06,
@@ -227,6 +236,12 @@ export const pricing: PricingDataset = [
     models: ["hunyuan"],
     input: 0.1,
     output: 0.1,
+    currency: Currency.CNY,
+  },
+  {
+    models: ["deepseek-chat", "deepseek-coder"],
+    input: 0.001,
+    output: 0.002,
     currency: Currency.CNY,
   },
   {

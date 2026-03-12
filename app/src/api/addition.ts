@@ -19,6 +19,9 @@ type SubscriptionResponse = {
   enterprise?: boolean;
   usage: Record<string, number>;
   level: number;
+  expired_at?: string;
+  refresh?: number;
+  refresh_at?: string;
 };
 
 type BuySubscriptionResponse = {

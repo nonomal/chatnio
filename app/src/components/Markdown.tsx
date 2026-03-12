@@ -10,6 +10,8 @@ import { cn } from "@/components/ui/lib/utils.ts";
 import Label from "@/components/markdown/Label.tsx";
 import Link from "@/components/markdown/Link.tsx";
 import Code, { CodeProps } from "@/components/markdown/Code.tsx";
+import Image from "@/components/markdown/Image.tsx";
+import Video from "@/components/markdown/Video.tsx";
 
 type MarkdownProps = {
   children: string;
@@ -43,6 +45,18 @@ function MarkdownContent({
     return {
       p: Label,
       a: Link,
+      img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+        if (props.alt === "video") {
+          return (
+            <Video
+              src={props.src || ""}
+              alt={props.alt}
+              className={props.className}
+            />
+          );
+        }
+        return <Image {...props} />;
+      },
       code: (props: CodeProps) => (
         <Code {...props} loading={loading} codeStyle={codeStyle} />
       ),
@@ -85,10 +99,16 @@ function Markdown({
 
 type CodeMarkdownProps = MarkdownProps & {
   filename: string;
+  language?: string;
 };
 
-export function CodeMarkdown({ filename, ...props }: CodeMarkdownProps) {
-  const suffix = filename.includes(".") ? filename.split(".").pop() : "";
+export function CodeMarkdown({
+  filename,
+  language,
+  ...props
+}: CodeMarkdownProps) {
+  const suffix =
+    language ?? (filename.includes(".") ? filename.split(".").pop() : "");
   const children = useMemo(() => {
     const content = props.children.toString();
 

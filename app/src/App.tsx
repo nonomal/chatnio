@@ -4,14 +4,17 @@ import AppProvider from "./components/app/AppProvider.tsx";
 import { AppRouter } from "./router.tsx";
 import { Toaster } from "@/components/ui/sonner";
 import Spinner from "@/spinner.tsx";
+import ReloadPrompt from "@/components/ReloadService.tsx";
 
 function App() {
   return (
     <Provider store={store}>
-      <Toaster />
-      <Spinner />
-      <AppProvider />
-      <AppRouter />
+      <AppProvider>
+        <Toaster />
+        <Spinner />
+        <ReloadPrompt />
+        <AppRouter />
+      </AppProvider>
     </Provider>
   );
 }

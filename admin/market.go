@@ -2,7 +2,9 @@ package admin
 
 import (
 	"chat/globals"
+	"chat/utils"
 	"fmt"
+
 	"github.com/spf13/viper"
 )
 
@@ -12,7 +14,7 @@ type MarketModel struct {
 	Name        string   `json:"name" mapstructure:"name" required:"true"`
 	Description string   `json:"description" mapstructure:"description"`
 	Default     bool     `json:"default" mapstructure:"default"`
-	HighContext bool     `json:"high_context" mapstructure:"high_context"`
+	HighContext bool     `json:"high_context" mapstructure:"highcontext"`
 	Avatar      string   `json:"avatar" mapstructure:"avatar"`
 	Tag         ModelTag `json:"tag" mapstructure:"tag"`
 }
@@ -48,8 +50,7 @@ func (m *Market) GetModel(id string) *MarketModel {
 }
 
 func (m *Market) SaveConfig() error {
-	viper.Set("market", m.Models)
-	return viper.WriteConfig()
+	return utils.SaveConfig("market", m.Models)
 }
 
 func (m *Market) SetModels(models MarketModelList) error {

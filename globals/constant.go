@@ -25,6 +25,9 @@ const (
 	MidjourneyChannelType  = "midjourney"
 	MoonshotChannelType    = "moonshot"
 	GroqChannelType        = "groq"
+	DeepseekChannelType    = "deepseek"
+	DifyChannelType        = "dify"
+	CozeChannelType        = "coze"
 )
 
 const (
@@ -47,4 +50,10 @@ const (
 	HttpProxyType
 	HttpsProxyType
 	Socks5ProxyType
+)
+
+const (
+	WebTokenType = "web"
+	ApiTokenType = "api"
+	SystemToken  = "system"
 )

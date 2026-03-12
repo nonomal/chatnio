@@ -1,7 +1,5 @@
-import NavBar from "./NavBar.tsx";
 import { ThemeProvider } from "@/components/ThemeProvider.tsx";
 import DialogManager from "@/dialogs";
-import Broadcast from "@/components/Broadcast.tsx";
 import { useEffectAsync } from "@/utils/hook.ts";
 import { bindMarket, getApiPlans } from "@/api/v1.ts";
 import { useDispatch } from "react-redux";
@@ -17,7 +15,7 @@ import { setForm } from "@/store/info.ts";
 import { themeEvent } from "@/events/theme.ts";
 import { useEffect } from "react";
 
-function AppProvider() {
+function AppProvider({ children }: { children?: React.ReactNode }) {
   const dispatch = useDispatch();
   const { receive } = useMessageActions();
 
@@ -37,12 +35,10 @@ function AppProvider() {
   }, []);
 
   return (
-    <>
-      <Broadcast />
-      <NavBar />
-      <ThemeProvider />
+    <ThemeProvider>
       <DialogManager />
-    </>
+      {children}
+    </ThemeProvider>
   );
 }
 

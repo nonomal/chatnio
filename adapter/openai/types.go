@@ -16,26 +16,28 @@ type MessageContent struct {
 type MessageContents []MessageContent
 
 type Message struct {
-	Role         string                `json:"role"`
-	Content      MessageContents       `json:"content"`
-	Name         *string               `json:"name,omitempty"`
-	FunctionCall *globals.FunctionCall `json:"function_call,omitempty"` // only `function` role
-	ToolCallId   *string               `json:"tool_call_id,omitempty"`  // only `tool` role
-	ToolCalls    *globals.ToolCalls    `json:"tool_calls,omitempty"`    // only `assistant` role
+	Role             string                `json:"role"`
+	Content          MessageContents       `json:"content"`
+	Name             *string               `json:"name,omitempty"`
+	FunctionCall     *globals.FunctionCall `json:"function_call,omitempty"` // only `function` role
+	ToolCallId       *string               `json:"tool_call_id,omitempty"`  // only `tool` role
+	ToolCalls        *globals.ToolCalls    `json:"tool_calls,omitempty"`    // only `assistant` role
+	ReasoningContent *string               `json:"reasoning,omitempty"`     // only for claude reasoning models
 }
 
 // ChatRequest is the request body for openai
 type ChatRequest struct {
-	Model            string                 `json:"model"`
-	Messages         interface{}            `json:"messages"`
-	MaxToken         *int                   `json:"max_tokens,omitempty"`
-	Stream           bool                   `json:"stream"`
-	PresencePenalty  *float32               `json:"presence_penalty,omitempty"`
-	FrequencyPenalty *float32               `json:"frequency_penalty,omitempty"`
-	Temperature      *float32               `json:"temperature,omitempty"`
-	TopP             *float32               `json:"top_p,omitempty"`
-	Tools            *globals.FunctionTools `json:"tools,omitempty"`
-	ToolChoice       *interface{}           `json:"tool_choice,omitempty"` // string or object
+	Model               string                 `json:"model"`
+	Messages            interface{}            `json:"messages"`
+	MaxToken            *int                   `json:"max_tokens,omitempty"`
+	MaxCompletionTokens *int                   `json:"max_completion_tokens,omitempty"`
+	Stream              bool                   `json:"stream"`
+	PresencePenalty     *float32               `json:"presence_penalty,omitempty"`
+	FrequencyPenalty    *float32               `json:"frequency_penalty,omitempty"`
+	Temperature         *float32               `json:"temperature,omitempty"`
+	TopP                *float32               `json:"top_p,omitempty"`
+	Tools               *globals.FunctionTools `json:"tools,omitempty"`
+	ToolChoice          *interface{}           `json:"tool_choice,omitempty"` // string or object
 }
 
 // CompletionRequest is the request body for openai completion
@@ -106,7 +108,8 @@ type ImageRequest struct {
 
 type ImageResponse struct {
 	Data []struct {
-		Url string `json:"url"`
+		Url     string `json:"url,omitempty"`
+		B64Json string `json:"b64_json,omitempty"`
 	} `json:"data"`
 	Error struct {
 		Message string `json:"message"`

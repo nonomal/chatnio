@@ -7,10 +7,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/go-redis/redis/v8"
 	"math"
 	"strings"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 // AuthLike is to solve the problem of import cycle
@@ -97,6 +98,7 @@ func getUsersForm(db *sql.DB, page int64, search string) PaginationForm {
 		stamp := utils.ConvertTime(expired)
 		if stamp != nil {
 			user.IsSubscribed = stamp.After(time.Now())
+			user.ExpiredAt = stamp.Format("2006-01-02 15:04:05")
 		}
 		user.Enterprise = isEnterprise.Valid && isEnterprise.Bool
 		user.IsBanned = isBanned.Valid && isBanned.Bool
@@ -111,19 +113,40 @@ func getUsersForm(db *sql.DB, page int64, search string) PaginationForm {
 	}
 }
 
+// clearUserCache clears all cache keys starting with nio:user:
+func clearUserCache(cache *redis.Client) error {
+	ctx := context.Background()
+	iter := cache.Scan(ctx, 0, "nio:user:*", 100).Iterator()
+	for iter.Next(ctx) {
+		if err := cache.Del(ctx, iter.Val()).Err(); err != nil {
+			return fmt.Errorf("failed to delete cache key %s: %v", iter.Val(), err)
+		}
+	}
+	return iter.Err()
+}
+
 func passwordMigration(db *sql.DB, cache *redis.Client, id int64, password string) error {
 	password = strings.TrimSpace(password)
 	if len(password) < 6 || len(password) > 36 {
 		return fmt.Errorf("password length must be between 6 and 36")
 	}
+	hash_passwd := utils.Sha2Encrypt(password)
 
+	// Update password in database
 	_, err := globals.ExecDb(db, `
 		UPDATE auth SET password = ? WHERE id = ?
-	`, utils.Sha2Encrypt(password), id)
+	`, hash_passwd, id)
 
-	cache.Del(context.Background(), fmt.Sprint("nio:user:root"))
+	if err != nil {
+		return err
+	}
 
-	return err
+	// Clear all user related cache
+	if err := clearUserCache(cache); err != nil {
+		return fmt.Errorf("failed to clear user cache: %v", err)
+	}
+
+	return nil
 }
 
 func emailMigration(db *sql.DB, id int64, email string) error {
@@ -171,17 +194,11 @@ func quotaMigration(db *sql.DB, id int64, quota float32, override bool) error {
 	return err
 }
 
-func subscriptionMigration(db *sql.DB, id int64, month int64) error {
-	// if month is negative, then decrease month
-	// if month is positive, then increase month
-
-	expireAt := time.Now().AddDate(0, int(month), 0)
-
+func subscriptionMigration(db *sql.DB, id int64, expired string) error {
 	_, err := globals.ExecDb(db, `
-		INSERT INTO subscription (user_id, total_month, expired_at) VALUES (?, ?, ?)
-		ON DUPLICATE KEY UPDATE total_month = total_month + ?, expired_at = DATE_ADD(expired_at, INTERVAL ? MONTH)
-	`, id, month, expireAt, month, month)
-
+		INSERT INTO subscription (user_id, expired_at) VALUES (?, ?)
+		ON DUPLICATE KEY UPDATE expired_at = ?
+	`, id, expired, expired)
 	return err
 }
 
@@ -232,7 +249,10 @@ func UpdateRootPassword(db *sql.DB, cache *redis.Client, password string) error 
 		return err
 	}
 
-	cache.Del(context.Background(), fmt.Sprint("nio:user:root"))
+	// Clear all user related cache
+	if err := clearUserCache(cache); err != nil {
+		return fmt.Errorf("failed to clear user cache: %v", err)
+	}
 
 	return nil
 }

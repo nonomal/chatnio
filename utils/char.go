@@ -2,11 +2,12 @@ package utils
 
 import (
 	"fmt"
-	"github.com/goccy/go-json"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/goccy/go-json"
 )
 
 func GetRandomInt(min int, max int) int {
@@ -146,6 +147,24 @@ func GetImageMarkdown(url string) string {
 	return fmt.Sprintf("![image](%s)", url)
 }
 
+func GetBase64ImageMarkdown(b64 string, _desc ...string) string {
+	// Extracts the image type from base64 string (e.g., "data:image/png;base64,...") or defaults to png
+	var imageType = "png"
+	if strings.HasPrefix(b64, "data:image/") {
+		parts := strings.Split(b64[11:], ";")
+		if len(parts) > 0 {
+			imageType = parts[0]
+		}
+	}
+
+	desc := "image"
+	if len(_desc) > 0 && _desc[0] != "" {
+		desc = _desc[0]
+	}
+
+	return fmt.Sprintf("![%s](data:image/%s;base64,%s)", desc, imageType, b64)
+}
+
 // SplitItem is the split function for strings.Split
 // e.g.
 // SplitItem("a,b,c", ",") => ["a,", "b,", "c"]
@@ -220,6 +239,42 @@ func ExtractImages(data string, includeBase64 bool) (content string, images []st
 	return content, images
 }
 
+func ExtractImagesFromMarkdown(data string) (images []string) {
+	// extract images like `![image](https://xxx.com/xxx?xxx=xxx&xxx=xxx)` and return urls
+	re := regexp.MustCompile(`!\[.*\]\((https?://\S+)\)`)
+	matches := re.FindAllStringSubmatch(data, -1)
+
+	for _, match := range matches {
+		images = append(images, match[1])
+	}
+
+	return images
+}
+
+func GetVideoMarkdown(url string, _desc ...string) string {
+	desc := "video"
+	if len(_desc) > 0 && _desc[0] != "" {
+		desc = _desc[0]
+	}
+
+	return fmt.Sprintf("![%s](%s)", desc, url)
+}
+
+func ExtractBase64FromMarkdown(data string) (images []string) {
+	// extract base64 images like `![image](data:image/png;base64,xxxxxx)`
+	re := regexp.MustCompile(`!\[.*?\]\((data:image/\w+;base64,[\w+/=]+)\)`)
+	matches := re.FindAllStringSubmatch(data, -1)
+
+	for _, match := range matches {
+		// We only need the base64 data part
+		if len(match) > 1 {
+			images = append(images, match[1])
+		}
+	}
+
+	return images
+}
+
 func ExtractBase64Images(data string) []string {
 	// get base64 images from data (data:image/png;base64,xxxxxx) (\n \\n [space] \\t \\r \\v \\f break the base64 string)
 	re := regexp.MustCompile(`(data:image/\w+;base64,[\w+/=]+)`)
@@ -229,7 +284,7 @@ func ExtractBase64Images(data string) []string {
 func ExtractExternalImages(data string) []string {
 	// https://platform.openai.com/docs/guides/vision/what-type-of-files-can-i-upload
 
-	re := regexp.MustCompile(`(https?://\S+\.(?:png|jpg|jpeg|gif|webp|heif|heic)(?:\s\S+)?)`)
+	re := regexp.MustCompile(`(https?://\S+\.(?:png|jpg|jpeg|gif|webp|heif|heic|bmp|svg|ico)(?:\?\S+)?)`)
 	return re.FindAllString(data, -1)
 }
 
@@ -350,17 +405,22 @@ func SafeSplit(data string, sep string, seglen int) (res []string) {
 	}
 }
 
-func ToSecret(raw string) string {
+func HideSecret(raw string, _flowLength ...int) string {
 	// like `axVbeixvN` => `axVb*****`
+
+	flowLength := 4
+	if len(_flowLength) > 0 {
+		flowLength = _flowLength[0]
+	}
 
 	data := []rune(raw)
 	length := len(data)
 
-	if length < 4 {
+	if length < flowLength {
 		return "****"
 	} else {
-		suffix := len(data) - 4
-		return string(data[:4]) + strings.Repeat("*", suffix)
+		suffix := len(data) - flowLength
+		return string(data[:flowLength]) + strings.Repeat("*", suffix)
 	}
 }
 

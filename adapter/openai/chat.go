@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strings"
 )
 
 func (c *ChatInstance) GetChatEndpoint(props *adaptercommon.ChatProps) string {
@@ -45,18 +46,35 @@ func (c *ChatInstance) GetChatBody(props *adaptercommon.ChatProps, stream bool) 
 
 	messages := formatMessages(props)
 
-	return ChatRequest{
+	// o1, o3, gpt-5 compatibility
+	isNewModel := len(props.Model) >= 2 && (props.Model[:2] == "o1" || props.Model[:2] == "o3") || strings.HasPrefix(props.Model, "gpt-5")
+
+	var temperature *float32
+	if isNewModel {
+		temp := float32(1.0)
+		temperature = &temp
+	} else {
+		temperature = props.Temperature
+	}
+
+	request := ChatRequest{
 		Model:            props.Model,
 		Messages:         messages,
-		MaxToken:         props.MaxTokens,
 		Stream:           stream,
 		PresencePenalty:  props.PresencePenalty,
 		FrequencyPenalty: props.FrequencyPenalty,
-		Temperature:      props.Temperature,
+		Temperature:      temperature,
 		TopP:             props.TopP,
 		Tools:            props.Tools,
 		ToolChoice:       props.ToolChoice,
 	}
+
+	if isNewModel {
+		request.MaxCompletionTokens = props.MaxTokens
+	} else {
+		request.MaxToken = props.MaxTokens
+	}
+	return request
 }
 
 // CreateChatRequest is the native http request body for openai

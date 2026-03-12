@@ -5,6 +5,7 @@ import cn from "@/resources/i18n/cn.json";
 import en from "@/resources/i18n/en.json";
 import ru from "@/resources/i18n/ru.json";
 import ja from "@/resources/i18n/ja.json";
+import tw from "@/resources/i18n/tw.json";
 
 // the translations
 // (tip move them in a JSON file and import them,
@@ -15,10 +16,12 @@ const resources = {
   en: { translation: en },
   ru: { translation: ru },
   ja: { translation: ja },
+  tw: { translation: tw },
 };
 
 export const langsProps: Record<string, string> = {
   cn: "简体中文",
+  tw: "正體中文",
   en: "English",
   ru: "Русский",
   ja: "日本語",

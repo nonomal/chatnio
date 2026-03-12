@@ -2,198 +2,196 @@
 
 ![chatnio](/app/public/logo.png)
 
-# [Chat Nio](https://chatnio.net)
+# [🥳 CoAI.Dev](https://coai.dev)
 
-_🚀 **下一代 AI 一站式解决方案**_
+#### 🚀 下一代 AIGC 一站式商业解决方案
+#### *“ CoAI.Dev > [Next Web](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web) + [One API](https://github.com/songquanpeng/one-api) ”*
 
-_🚀 **Next Generation AI One-Stop Solution**_
 
+[English](./README.md) · 简体中文 · [文档](https://coai.dev) · [Discord](https://discord.gg/rpzNSmqaF2) · [部署文档](https://coai.dev/docs/deploy)
 
-[官网](https://chatnio.net) | [开放文档](https://docs.chatnio.net) | [SDKs](https://docs.chatnio.net/developers/sdk) | [QQ 群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=1mv1Y8SyxnQVvQCoqhmIgVTbwQmkNmvQ&authKey=5KUA9nJPR29nQwjbsYNknN2Fj6cKePkRes%2B1QZy84Dr4GHYVzcvb0yklxiMMNVJN&noverify=0&group_code=749482576)
+[![CoAI.Dev: #1 Repo Of The Day](https://trendshift.io/api/badge/repositories/6369)](https://trendshift.io/repositories/6369)
 
-[English](https://github.com/Deeptrain-Community/chatnio/blob/master/README.md) | 简体中文
-
-[![code-stats](https://stats.deeptrain.net/repo/Deeptrain-Community/chatnio)](https://stats.deeptrain.net)
+<img alt="CoAI.Dev Preview" src="./screenshot/coai.png" width="100%" style="border-radius: 8px">
 
 </div>
 
 ## 📝 功能
+1. 🤖️ **丰富模型支持**: 多模型服务商支持 (OpenAI / Anthropic / Gemini / Midjourney 等十余种格式兼容 & 私有化 LLM 支持)
+2. 🤯 **美观 UI 设计**: UI 兼容 PC / Pad / 移动三端，遵循 [Shadcn UI](https://ui.shadcn.com) & [Tremor Charts](https://blocks.tremor.so) 设计规范，丰富美观的界面设计和后台仪表盘
+3. 🎃 **完整 Markdown 支持**: 支持 **LaTeX 公式** / **Mermaid 思维导图** / 表格渲染 / 代码高亮 / 图表绘制 / 进度条等进阶 Markdown 语法支持
+4. 👀 **多主题支持**: 支持多种主题切换，包含亮色主题的**明亮模式**和暗色主题的**深色模式**。 👉 [自定义配色](https://github.com/coaidev/coai/blob/main/app/src/assets/globals.less)
+5. 📚 **国际化支持**: 支持国际化，支持多语言切换 🇨🇳 🇺🇸 🇯🇵 🇷🇺 👉 欢迎贡献翻译 [Pull Request](https://github.com/coaidev/coai/pulls) 
+6. 🎨 **文生图支持**: 支持多种文生图模型: **OpenAI DALL-E**✅ & **Midjourney** (支持 **U/V/R** 操作)✅ & Stable Diffusion✅ 等
+7. 📡 **强大对话同步**: **用户 0 成本对话跨端同步支持**，支持**对话分享** (支持链接分享 & 保存为图片 & 分享管理), **无需 WebDav / WebRTC 等依赖和复杂学习成本**
+8. 🎈 **模型市场 & 预设系统**: 支持后台可自定义的模型市场, 可提供模型介绍、标签等参数, 站长可根据情况自定义模型简介。同时支持预设系统，包含 **自定义预设** 和 **云端同步** 功能。
+9. 📖 **丰富文件解析**: **开箱即用**, 支持**所有模型**的文件解析 (PDF / Docx / Pptx / Excel / 图片等格式解析), **支持更多云端图片存储方案** (S3 / R2 / MinIO 等), **支持 OCR 图片识别** 👉 详情参见项目 [CoAI.Dev Blob Service](https://github.com/coaidev/blob-service) (支持 Vercel / Docker 一键部署)
+10. 🌏 **全模型联网搜索**: 基于 [SearXNG](https://github.com/searxng/searxng) 开源引擎, 支持 Google / Bing / DuckDuckGo / Yahoo / WikiPedia / Arxiv / Qwant 等丰富搜索引擎搜索, 支持安全搜索模式, 内容截断, 图片代理, 测试搜索可用性等功能。
+11. 💕 **渐进式 Web 应用 (PWA)**: 支持 PWA 应用 & 支持桌面端 (桌面端基于 [Tauri](https://github.com/tauri-apps/tauri))
+12. 🤩 **齐全后台管理**: 支持美观丰富的仪表盘, 公告 & 通知管理, 用户管理, 订阅管理, 礼品码 & 兑换码管理, 价格设定, 订阅设定, 自定义模型市场, 自定义站点名称 & Logo, SMTP 发件设置等功能
+13. 🤑 **多种计费方式**: 支持 💴 **订阅制** 和 💴 **弹性计费** 两种计费方式, 弹性计费支持 次数计费 / Token 计费 / 不计费 / 可匿名调用 和 **最小请求点数** 检测等强大功能
+14. 🎉 **创新模型缓存**: 支持开启模型缓存：即同一个请求入参 Hash 下, 如果之前已请求过, 将直接返回缓存结果 (击中缓存将不计费), 减少请求次数。可自行自定义是否缓存的模型、缓存时间、多种缓存结果数等高级缓存设置
+15. 🥪 **附加功能** (停止支持): 🍎 **AI 项目生成器功能** / 📂 **批量文章生成功能** / 🥪 **AI 卡片功能** (已废弃)
+16. 😎 **优秀渠道管理**: 自写优秀渠道算法, 支持⚡ **多渠道管理**, 支持🥳**优先级**设置渠道的调用顺序, 支持🥳**权重**设置同一优先级下的渠道均衡负载分配概率, 支持🥳**用户分组**, 🥳**失败自动重试**, 🥳**模型重定向**, 🥳**内置上游隐藏**, 🥳**渠道状态管理**等强大**企业级功能**
+17. ⭐ **OpenAI API 分发 & 中转系统**: 支持以 **OpenAI API** 标准格式调用各种大模型, 集成强大的渠道管理功能, 仅需部署一个站点即可实现同时发展 B/C 端业务💖
+18. 👌 **快速同步上游**: 渠道设置、模型市场、价格设定等设置都可快速同步上游站点，以此基础修改自己的站点配置，快速搭建自己的站点，省时省力，一键同步，快速上线
+19. 👋 **SEO 优化**: 支持 SEO 优化，支持自定义站点名称、站点 Logo 等 SEO 优化设设置使搜索引擎更快的爬取，你的站点与众不同👋
+20. 🎫 **多种兑换码体系**: 支持多种兑换码体系，支持礼品码和兑换码，支持批量生成，礼品码适合宣传分发，兑换码适合发卡销售，礼品码一个类型的多个码一个用户仅能兑换一个码，在宣传中一定程度上减少一个用户兑换多次的情况😀
+21. 🥰 **商用友好协议**: 采用 **Apache-2.0** 开源协议, 商用二开 & 分发友好 (也请遵守 Apache-2.0 协议的规定, 请勿用于违法用途)
 
-- ✨ **AI 聊天对话功能**
-  1. **丰富格式兼容**
-     - 支持 Vision 模型, 同时支持 ***直接上传图片*** 和 ***输入图片直链或 Base64 图片*** 功能 (如 GPT-4 Vision Preview, Gemini Pro Vision 等模型)
-     - 支持 DALL-E 模型绘图
-     - 支持 Midjourney / Niji 模型的 **Imagine** / **Upscale** / **Variant** / **Reroll** 操作
-     ![Midjourney 绘图](/screenshot/code.png)
-  2. **丰富 Markdown 支持和主题切换**, 支持明暗模式, 代码高亮, Mermaid, LaTeX 公式, 表格, 进度条, Virtual Message 等
-     ![Markdown 消息](/screenshot/latex.jpg)
-     ![Markdown Mermaid](/screenshot/mermaid.png)
-  3. **支持消息菜单**, 支持重新回答, 复制消息, 使用消息, 编辑消息, 删除消息, 保存为文件等操作
-     ![Vision 支持](/screenshot/vision.png)
-  4. **支持多端适配**, 支持 PWA 应用, 支持桌面端 *(桌面端基于 [Tauri](https://github.com/tauri-apps/tauri))*
-  5. **对话记忆功能**, 云端同步, 原生支持站点直链分享对话, 支持使用分享对话, 分享对话保存为图片, 支持分享管理 (支持查看, 删除分享等操作)
-     ![对话分享](/screenshot/sharing.png)
-  6. **原生支持全模型文件解析**, 支持 pdf, docx, pptx, xlsx, 图片等格式解析 _(详情参考项目 [chatnio-blob-service](https://github.com/Deeptrain-Community/chatnio-blob-service))_
-     ![文件上传](/screenshot/file.png)
-  7. 支持全模型 DuckDuckGo 联网搜索功能 _(详情参考项目 [duckduckgo-api](https://github.com/binjie09/duckduckgo-api), 需自行搭建并在系统设置中联网设置中设置, 感谢作者 [@binjie09](https://github.com/binjie09), 中转 API 模型前加 **web-** 前缀即可开启联网搜索)_
-     ![联网搜索](/screenshot/online.png)
-  8. **大文本全屏编辑支持**, 支持 *纯文本编辑*, *编辑预览模式*, *纯预览模式* 三种模式切换
-     ![编辑器](/screenshot/editor.png)
-  9. **模型市场功能**, 支持模型搜索, 支持顺序拖拽, 包含模型名称, 模型描述, 模型 Tags, 模型头像, 自动绑定模型的价格设置, 自动绑定订阅配额 (包含在订阅的模型将标有 *plus* 标签)
-     ![模型市场](/screenshot/market.png)
-  10. **支持预设功能**, 支持 ***自定义预设*** 和 **_云端同步_** 功能, 支持预设克隆, 预设头像设置, 预设简介设置
-     ![预设设置](/screenshot/mask.png)
-     ![预设编辑](/screenshot/mask-editor.png)
-  11. **支持站点公告** 支持站点公告和通知
-  12. **支持偏好设置**, i18n 多语言支持, 自定义最大携带会话数, 最大回复 tokens 数, 模型参数自定义, 重置设置等
-     ![偏好设置](/screenshot/settings.png)
-  13. **国际化支持**, 支持多语言切换
-  14. **附加功能** _(可通过后台系统设置设置附加功能的用户分组权限来开启和关闭)_
-      - *[停止支持]* 🍎 **AI 项目生成器功能**,  支持生成过程查看,  支持 TAR / ZIP 格式下载 *(原理为预设实现, 可能不稳定)*
-      - *[停止支持]* 📂 **批量文章生成功能**, 支持生成进度条, 一键生成 DOCX 文档的 TAR / ZIP 格式下载 *(需要生成数量高于上游该模型的最高并发数)*
-      - *[已弃用]* 🥪 **AI 卡片功能** (已废弃), AI 的问题和答案以卡片形式展现, 可直接以图片 url 形式嵌入。*(原理为动态生成 SVG)*
-- 🔔 丰富用户管理和计费体系
-  1. **丰富且美观的仪表盘**, 包含本日和当月入账信息, 订阅人数, 模型使用统计折线图, 饼状图分析, 收入统计, 用户类型统计, 模型使用统计, 请求次数和模型错误数量统计图表等
-     ![仪表盘](/screenshot/admin.png)
-  2. **支持用户管理**, *用户列表*, *用户详情*, *管理操作* (*修改密码*, *修改邮箱*, *封禁 / 解封用户*, *设为管理员*, *点数变更*, *点数设置*, *订阅管理*, *订阅等级设置*, *释放订阅用量* 等操作)
-  3. **支持礼品码和兑换码管理** 支持管理操作, 支持批量生成和保存为文件
-  4. **价格设定**, 支持模型价格设定 (_**次数计费**_, **_Token 弹性计费_**, _**不计费**_ 等类型), 支持同步上游 Chat Nio 站点的价格设定 (可选是否覆盖本站已有模型价格规则), 未设定价格模型检测 (如果非管理员将自动检测并停止使用模型进而防止金额损失)
-     ![购买点数](/screenshot/shop.png)
-     ![价格设定](/screenshot/charge.png)
-  5. **订阅设定**, 区别于弹性计费, 订阅是一种固定按次的价格的计费方式, 平台用户可以通过套餐以固定价格订阅, 支持是否开启订阅 (默认关闭), 支持订阅分层, 支持订阅配额设置, 支持订阅配额涵盖模型设置, 图标设置, 从其他套餐的配额导入等功能。
-     ![订阅计划](/screenshot/subscription.png)
-     ![订阅设置](/screenshot/plan.png)
-  6. **自定义模型市场**, 编辑前台模型市场模型名称, 介绍, Tags, 头像 (内置模型图片选择和自定义模型图片设置), 是否加入模型模型等信息
-     ![模型市场设置](/screenshot/admin-market.png)
-  7. **系统设置**, 自定义网站名称, 网站 Logo, 文档链接, 是否暂停注册, 用户初始点数等设置, 自定义购买链接 (卡密发卡地址), 联系信息, 页脚信息等
-     ![系统设置](/screenshot/system.png)
-  8. **支持 SMTP 发件**, 支持是否启用邮件后缀白名单, 支持自定义邮件后缀白名单
-  9. **支持模型缓存**, *即同一个入参下, 如果之前已请求过, 将直接返回缓存结果 (击中缓存将不计费), 减少请求次数。可自定义一种情况的最大缓存结果数 (默认为 1), 自定义可缓存的模型 (默认为空), 自定义缓存时间 (默认为 1 小时), 支持一键设置 *全部模型不缓存*, *免费模型缓存*, *所有模型缓存* 等操作*
-- ⚡ 渠道管理体系
-  1. Chat Nio **自写渠道分配算法** (不依赖 http 上下文), 抽象 Adapter 兼容层架构, 低耦合, 高可扩展性
-  2. **支持多渠道管理**, 支持**优先级调配**, **权重负载**, **渠道状态管理**等 _(优先级是在模型请求过程中, 渠道的优先级分配, 优先级越高, 越先被使用, 如果报错, 将自动 fall 至优先级更低的渠道；权重是指在一个优先级下, 渠道的权重, 权重越高, 被使用的概率越大, 同一个优先级的多个渠道最多只能有一个被使用, 权重越高, 被击中的概率越大)_
-  3. **兼容多种格式**, 支持多模型兼容层, 详情参见下方模型支持部分
-  4. **支持自定义模型**, 可通过 *添加模型* 使用已知模型, 支持增加自定义模型, 支持一键填入模板模型 (指当前格式默认支持的模板模型, 如 OpenAI 格式的模板模型有 *gpt-3.5-turbo-0613* 等), 支持一键清空模型
-  5. **支持渠道重试**, 支持渠道的 Retry 机制, 支持自定义重试次数, 重试次数超过后将自动 fall)
-  6. **支持同渠道均衡负载**, 单个渠道内可配置多个密钥而非批量创建渠道 (多个密钥换行间隔), 以相同权重随机分配请求,  Retry 机制也将和同渠道内的多密钥搭配使用, 随机抽取密钥进行重试。
-  7. **支持渠道模型映射**, 将模型映射至本渠道已支持模型中, 格式为 *目标模型*>*已有模型*, 加如前缀 `!` 即可让已有模型不分配在本渠道的请求击中的涵盖模型中, 具体使用方法请参考程序内的渠道设置内的说明和提示。
-  8. **支持用户分组**, 自定义勾选可使用此模型的用户分组 (如 _匿名用户_, _普通用户_, _基础版订阅用户_, _标准版订阅用户_, _专业版订阅用户_ 等分组, 设置为 0 分组可用和设置为全部分组可用都是一样的效果)
-  9. **内置上游隐藏**, 报错时自动隐藏渠道内设置的上游地址 (如 _**channel://2**/v1/chat/completions_), 同时支持隐藏秘钥 (_Gemini 说的就是你 不隐藏秘钥报错直接把秘钥甩出去_), 以防止上游渠道在未设置秘钥或者上游错误信息暴露完整秘钥的情况下 (如逆向类型渠道) 被滥用, 同时在多个渠道同时为同一接入点的情况下, 也方便排查问题
-  ![渠道设置](/screenshot/channel.png)
-  ![渠道分组](/screenshot/channel-group.png)
-- ✨ 中转 API 服务
-  1. 以 OpenAI 通用格式兼容多种格式, 支持多模型兼容层, 这意味着你可以使用一种格式, 同时兼容多家 AI 模型
-  2. 将 `https://api.openai.com` 替换为 `https://api.chatnio.net` (示例), 填入控制台中的 `API 设置` 中的 API Key 即可使用, 支持重置 Key。
-  3. 支持格式
-    - [x] Chat Completions _(/v1/chat/completions)_
-    - [x] Image Generation _(/v1/images)_
-    - [x] Model List _(/v1/models)_
-    - [x] Dashboard Billing _(/v1/billing)_
-- 🎃 更多功能等待你的发现
+> ### ✨ CoAI.Dev 商业版
+> ![商业版预览](./screenshot/coai-pro.png)
+>
+> - ✅ 美观商业级 UI, 漂亮的前端界面与后台管理
+> - ✅ 支持 TTS & STT, 插件市场, RAG 知识库等丰富功能与模块
+> - ✅ 更多支付供应商, 更多计费模式和高级订单管理
+> - ✅ 支持更多鉴权方式，包括短信登录、OAuth 登录等
+> - ✅ 支持模型监控，渠道健康检测，故障告警自动渠道切换
+> - ✅ 支持多租户 API Key 分发系统, 企业级令牌权限管理与访问者限制
+> - ✅ 支持安全审核, 日志记录, 模型限速, API Gateway 等高级功能
+> - ✅ 支持推广奖励，专业数据统计，用户画像分析等商业分析能力
+> - ✅ 支持Discord/Telegram/飞书等机器人对接集成能力 (扩展模块)
+> - ...
+>
+> [👉 了解更多](https://www.coai.dev/docs/contact)
 
 
 ## 🔨 支持模型
-- [x] OpenAI
-  - [x] Chat Completions (support *vision*, *tools_calling* and *function_calling*)
-  - [x] Image Generation
-- [x] Azure OpenAI
-- [x] Anthropic Claude (support *vision*)
-- [x] Slack Claude (deprecated)
-- [x] Sparkdesk (support *function_calling*)
-- [x] Google Gemini (PaLM2)
-- [x] New Bing (creative, balanced, precise)
-- [x] ChatGLM (turbo, pro, std, lite)
-- [x] DashScope Tongyi (plus, turbo)
-- [x] Midjourney
-    - [x] Mode Toggling (relax, fast, turbo)
-    - [x] Support U/V/R Actions
-- [x] Tencent Hunyuan
-- [x] Baichuan AI
-- [x] Moonshot AI
-- [x] Groq Cloud AI
-- [x] ByteDance Skylark (support *function_calling*)
-- [x] 360 GPT
-- [x] LocalAI (Stable Diffusion, RWKV, LLaMa 2, Baichuan 7b, Mixtral, ...) _*requires local deployment_
+1. OpenAI & Azure OpenAI *(✅ Vision ✅ Function Calling)*
+2. Anthropic Claude *(✅ Vision ✅ Function Calling)*
+3. Google Gemini & PaLM2 *(✅ Vision)*
+4. Midjourney *(✅ Mode Toggling ✅ U/V/R Actions)*
+5. 讯飞星火 SparkDesk *(✅ Vision ✅ Function Calling)*
+6. 智谱清言 ChatGLM *(✅ Vision)*
+7. 通义千问 Tongyi Qwen
+8. 腾讯混元 Tencent Hunyuan
+9. 百川大模型 Baichuan AI
+10. 月之暗面 Moonshot AI (👉 OpenAI)
+11. 深度求索 DeepSeek AI (👉 OpenAI)
+12. 字节云雀 ByteDance Skylark *(✅ Function Calling)*
+13. Groq Cloud AI
+14. OpenRouter (👉 OpenAI)
+15. 360 GPT
+16. LocalAI / Ollama (👉 OpenAI)
+
+## 👻 中转 OpenAI 兼容 API
+   - [x] Chat Completions _(/v1/chat/completions)_
+   - [x] Image Generation _(/v1/images)_
+   - [x] Model List _(/v1/models)_
+   - [x] Dashboard Billing _(/v1/billing)_
 
 
-## 📦 部署
-*部署成功后, 管理员账号为 `root`, 密码默认为 `chatnio123456`*
+## 📦 部署方式
+> [!TIP]
+> **部署成功后, 管理员账号为 `root`, 密码默认为 `chatnio123456`**
 
-1. ⚡ Docker Compose 安装 (推荐)
-    
-    > 运行成功后, 宿主机映射地址为 `http://localhost:8000`
+### ✨ Zeabur (一键部署)
+[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/M86XJI)
 
-    ```shell
-    git clone --depth=1 --branch=main --single-branch https://github.com/Deeptrain-Community/chatnio.git
-    cd chatnio
-    docker-compose up -d # 运行服务
-   # 如需使用 stable 版本, 请使用 docker-compose -f docker-compose.stable.yaml up -d 替代
-   # 如需使用 watchtower 自动更新, 请使用 docker-compose -f docker-compose.watch.yaml up -d 替代
-    ```
+> Zeabur 提供一定的免费额度, 可以使用非付费区域进行一键部署，同时也支持计划订阅和弹性计费等方式弹性扩展。
+> 1. 点击 `Deploy` 进行部署, 并输入你希望绑定的域名，等待部署完成。
+> 2. 部署完成后, 请访问你的域名, 并使用用户名 `root` 密码 `chatnio123456` 登录后台管理，请按照提示在 chatnio 后台及时修改密码。
+
+### 🐳 宝塔面板 (一键部署)
+
+1. 安装宝塔面板，前往 [宝塔面板官网](https://www.bt.cn/new/download.html) 进行安装，选择正式版脚本安装。
+2. 登录面板，点击左侧 **Docker** 进入 Docker 管理。
+3. 如提示未安装 Docker / Docker Compose， 可根据上方引导安装。
+4. 安装完成后，进入 **应用商城**，搜索 `CoAI` 并点击 **安装**。
+5. 配置应用基本信息，如您的域名，端口等配置，并点击 **确认** (可使用默认配置)。
+6. 首次安装可能需要等待 1-2 分钟完成数据库初始化。如遇到问题，请查看面板运行日志进行排查。
+7. 访问您配置的域名或服务器 `http://[ip]:[port]`，使用用户名 `root` 和密码 `chatnio123456` 登录后台管理。
+
+### 阿里云计算巢 (一键部署)
+ [![Deploy on AlibabaCloud ComputeNest](https://service-info-public.oss-cn-hangzhou.aliyuncs.com/computenest.svg)](https://computenest.console.aliyun.com/service/instance/create/default?type=user&ServiceName=CoAI社区版)
+1. 访问计算巢CoAI[部署链接](https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&ServiceName=CoAI社区版)，按提示填写部署参数
+2. 选择付费类型，填写实例参数与网络参数，点击 **确认订单**
+3. 确认部署参数并查看预估价格后，点击立即创建，等待服务实例部署完成
+4. 点击左侧 **服务实例** 等待服务实例部署完成后，点击实例ID进入到详情界面
+5. 点击详情界面**立即使用**中的链接，可进入CoAI社区版界面。默认用户名为`root`，密码`为chatnio123456` 登录后台管理。
+6. 更多操作详情与付费信息，参见：[服务详情](https://computenest.console.aliyun.com/service/detail/cn-hangzhou/service-bfbf676bd89d434691fc/1?type=user&isRecommend=true)
+
+### ⚡ Docker Compose 安装 (推荐)
+> [!NOTE]
+> 运行成功后, 宿主机映射地址为 `http://localhost:8000`
+
+ ```shell
+ git clone --depth=1 --branch=main --single-branch https://github.com/coaidev/coai.git
+ cd chatnio
+ docker-compose up -d # 运行服务
+# 如需使用 stable 版本, 请使用 docker-compose -f docker-compose.stable.yaml up -d 替代
+# 如需使用 watchtower 自动更新, 请使用 docker-compose -f docker-compose.watch.yaml up -d 替代
+```
    
-   版本更新（_开启 Watchtower 自动更新的情况下, 无需手动更新_）：
-   ```shell
-   docker-compose down 
-   docker-compose pull
-   docker-compose up -d
-   ```
-   
-   > - MySQL 数据库挂载目录项目 ~/**db**
-   > - Redis 数据库挂载目录项目 ~/**redis**
-   > - 配置文件挂载目录项目 ~/**config**
+版本更新（_开启 Watchtower 自动更新的情况下, 无需手动更新_）：
+```shell
+docker-compose down 
+docker-compose pull
+docker-compose up -d
+```
 
-2. ⚡ Docker 安装 (轻量运行时, 常用于外置 _MYSQL/RDS_ 服务)
-    > 如需使用 stable 版本, 请使用 `programzmh/chatnio:stable` 替代 `programzmh/chatnio:latest`  
-    ```shell
-   docker run -d --name chatnio \
-      --network host \
-      -p 8000:8094 \
-      -v ~/config:/config \
-      -v ~/logs:/logs \
-      -v ~/storage:/storage \
-      -e MYSQL_HOST=localhost \
-      -e MYSQL_PORT=3306 \
-      -e MYSQL_DB=chatnio \
-      -e MYSQL_USER=root \
-      -e MYSQL_PASSWORD=chatnio123456 \
-      -e REDIS_HOST=localhost \
-      -e REDIS_PORT=6379 \
-      -e SECRET=secret \
-      -e SERVE_STATIC=true \
-      programzmh/chatnio:latest
-    ```
-   > - *--network host* 指使用宿主机网络, 使 Docker 容器使用宿主机的网络, 可自行修改
-   > - *-p 8000:8094* 指映射宿主机端口为 8000, 可自行修改冒号前的端口号
-   > - SECRET: JWT 密钥, 自行生成随机字符串修改
-   > - SERVE_STATIC: 是否启用静态文件服务 (正常情况下不需要更改此项, 详见下方常见问题解答)
-   > - *-v ~/config:/config* 挂载配置文件, *-v ~/logs:/logs* 挂载日志文件的宿主机目录, *-v ~/storage:/storage* 挂载附加功能的生成文件
-   > - 需配置 MySQL 和 Redis 服务, 请自行参考上方信息修改环境变量
-    
-    版本更新 （_开启 Watchtower 后无需手动更新, 执行后按照上述步骤重新运行即可_）：
-    ```shell
-    docker stop chatnio
-    docker rm chatnio
-    docker pull programzmh/chatnio:latest
-   ```
+> - MySQL 数据库挂载目录项目 ~/**db**
+> - Redis 数据库挂载目录项目 ~/**redis**
+> - 配置文件挂载目录项目 ~/**config**
 
-3. ⚒ 编译安装 (自定义性强)
-    > 部署成功后, 默认端口为 **8094**, 访问地址为 `http://localhost:8094`
-    > Config 配置项 (~/config/**config.yaml**) 可以使用环境变量进行覆盖, 如 `MYSQL_HOST` 环境变量可覆盖 `mysql.host` 配置项
+### ⚡ Docker 安装 (轻量运行时, 常用于外置 _MYSQL/RDS_ 服务)
+> [!NOTE]
+> 运行成功后, 宿主机地址为 `http://localhost:8094`。
+> 
+> 如需使用 stable 版本, 请使用 `programzmh/chatnio:stable` 替代 `programzmh/chatnio:latest`  
 
-    ```shell
-    git clone https://github.com/Deeptrain-Community/chatnio.git
-    cd chatnio
-   
-    cd app
-    npm install -g pnpm
-    pnpm install
-    pnpm build
-   
-    cd ..
-    go build -o chatnio
-   
-    nohup ./chatnio > output.log & # using nohup to run in background
-    ```
+```shell
+docker run -d --name chatnio \
+   --network host \
+   -v ~/config:/config \
+   -v ~/logs:/logs \
+   -v ~/storage:/storage \
+   -e MYSQL_HOST=localhost \
+   -e MYSQL_PORT=3306 \
+   -e MYSQL_DB=chatnio \
+   -e MYSQL_USER=root \
+   -e MYSQL_PASSWORD=chatnio123456 \
+   -e REDIS_HOST=localhost \
+   -e REDIS_PORT=6379 \
+   -e SECRET=secret \
+   -e SERVE_STATIC=true \
+   programzmh/chatnio:latest
+```
+
+> - *--network host* 指使用宿主机网络, 使 Docker 容器使用宿主机的网络, 可自行修改
+> - SECRET: JWT 密钥, 自行生成随机字符串修改
+> - SERVE_STATIC: 是否启用静态文件服务 (正常情况下不需要更改此项, 详见下方常见问题解答)
+> - *-v ~/config:/config* 挂载配置文件, *-v ~/logs:/logs* 挂载日志文件的宿主机目录, *-v ~/storage:/storage* 挂载附加功能的生成文件
+> - 需配置 MySQL 和 Redis 服务, 请自行参考上方信息修改环境变量
+ 
+ 版本更新 （_开启 Watchtower 后无需手动更新, 执行后按照上述步骤重新运行即可_）：
+ ```shell
+docker stop chatnio
+docker rm chatnio
+docker pull programzmh/chatnio:latest
+```
+
+### ⚒ 编译安装
+> [!NOTE]
+> 部署成功后, 默认端口为 **8094**, 访问地址为 `http://localhost:8094`
+> 
+> Config 配置项 (~/config/**config.yaml**) 可以使用环境变量进行覆盖, 如 `MYSQL_HOST` 环境变量可覆盖 `mysql.host` 配置项
+
+```shell
+git clone https://github.com/coaidev/coai.git
+cd chatnio
+
+cd app
+npm install -g pnpm
+pnpm install
+pnpm build
+
+cd ..
+go build -o chatnio
+
+# e.g. using nohup (you can also use systemd or other service manager)
+nohup ./chatnio > output.log & # using nohup to run in background
+```
 
 ## ❓ 常见问题 Q&A
 1. **为什么我部署后的站点可以访问页面, 可以登录注册, 但是无法使用聊天 (一直在转圈)？**
@@ -209,7 +207,7 @@ _🚀 **Next Generation AI One-Stop Solution**_
    - Redis: 存储用户快速鉴权信息, IP 速率限制, 订阅配额, 邮箱验证码等数据。
    - 环境未配置好的情况下, 会导致服务无法正常运行, 请确保你的 MySQL 和 Redis 服务已正常运行 (Docker 部署, 编译部署需自行搭建外部服务)。
 4. **我的机器为 ARM 架构, 该项目支持 ARM 架构吗？**
-   - 支持。Chat Nio 项目使用 BuildX 构建多架构镜像, 你可以直接使用 docker-compose 或 docker 运行, 无需额外配置。
+   - 支持。CoAI.Dev 项目使用 BuildX 构建多架构镜像, 你可以直接使用 docker-compose 或 docker 运行, 无需额外配置。
    - 如果你使用编译安装, 直接在 ARM 机器上编译即可, 无需欸外配置。如果你使用 x86 机器编译, 请使用 `GOARCH=arm64 go build -o chatnio` 进行交叉编译并上传至 ARM 机器上运行。
 5. **如何修改 Root 默认密码？**
    - 请点击右上角头像或侧边栏底部用户框进入后台管理, 点击系统设置下常规设置操作栏的 修改 Root 密码 进行修改。或者选择在 用户管理 中选定 root 用户进行修改密码操作。
@@ -218,14 +216,14 @@ _🚀 **Next Generation AI One-Stop Solution**_
    - 如果设置为非 *SERVE_STATIC* 模式, 开启前后端分离部署, 请将后端域名设置为你的后端 API 服务地址, 如 `https://api.example.com`。
    - 后端域名此处用于 Midjourney Proxy 服务的后端回调地址, 如无需使用 Midjourney Proxy 服务, 请忽略此设置。
 7. **如何配置支付方式？**
-   - Chat Nio 开源版支持发卡模式, 设置系统设置中的购买链接为你的发卡地址即可。卡密可通过用户管理中兑换码管理中批量生成。
+   - CoAI.Dev 开源版支持发卡模式, 设置系统设置中的购买链接为你的发卡地址即可。卡密可通过用户管理中兑换码管理中批量生成。
 8. **礼品码和兑换码有什么区别？**
    - 礼品码一种类型只能一个用户只能绑定一次, 而非 aff code, 发福利等方式可使用礼品码, 可在头像下拉菜单中的礼品码中兑换。
    - 兑换码一种类型可以多个用户绑定, 可作为正常购买和发卡使用, 可在用户管理中的兑换码管理中批量生成, 在头像下拉菜单的点数（菜单第一个）内输入兑换码进行兑换。
    - 一个例子：比如我发了一个类型为 *新年快乐* 的福利, 此时推荐使用礼品码, 假设发放 100 个 66 点数, 如果为兑换码, 手快的一个用户就批量把所有兑换码的 6600 点数都用完了, 而礼品码则可以保证每个用户只能使用一次 (获得 66 点数)。
    - 而搭建发卡的时, 如果用礼品码, 因为一个类型只能兑换一次, 购买多个礼品码会导致兑换失败, 而兑换码则可以在此场景下使用。
 9. **该项目支持 Vercel 部署吗？**
-   - Chat Nio 本身并不支持 Vercel 部署, 但是你可以使用前后端分离模式,  Vercel 部署前端部分, 后端部分使用 Docker 部署或编译部署。
+   - CoAI.Dev 本身并不支持 Vercel 部署, 但是你可以使用前后端分离模式,  Vercel 部署前端部分, 后端部分使用 Docker 部署或编译部署。
 10. **前后端分离部署模式是什么？**
     - 正常情况下, 前后端在同一服务内, 后端地址为 `/api`。前后端分离部署指前端和后端分别部署在不同的服务上, 前端服务为静态文件服务, 后端服务为 API 服务。
       - 举个例子, 前端使用 Nginx (或 Vercel 等) 部署, 部署的域名为 `https://www.chatnio.net`。
@@ -244,81 +242,45 @@ _🚀 **Next Generation AI One-Stop Solution**_
         - 不计费模型无限制
         - 次数计费模型最小点数为该模型的 1 次请求点数 (e.g. 若一个模型的单次请求点数为 0.1 点数, 则最小请求点数为 0.1 点数)
         - Token 弹性计费模型为 1K 输入 Tokens 价格 + 1K 输出 Tokens 价格 (e.g. 若一个模型的 1K 输入 Tokens 价格为 0.05 点数, 1K 输出 Tokens 价格 0.1 点数, 则最小请求点数为 0.15 点数)
-13. **DuckDuckGo API 搭建避坑**
-    - 首先感谢 Binjie 作者的 [duckduckgo-api](https://github.com/binjie09/duckduckgo-api) 项目, 该项目为 Chat Nio 提供了联网搜索功能 (prompt 实现)。
-    - DDG API 服务需要自行搭建, Binjie 作者的默认站点中时常配额被用尽, 请自行搭建并在系统设置中联网设置中设置。
-    - DuckDuckGo **无法在国内环境使用**, 请使用代理或海外服务器进行搭建 DDG API 端点。
-    - 部署成功后请测试 `https://your.domain/search?q=hi` 来简单测试是否搭建成功，如若无法访问，请检查你的 DDG API 服务是否正常运行或寻找原项目寻求帮助。
-    - 部署成功后, 请前往系统设置中的联网设置, 设置你的 DDG API 端点地址 (不要加后缀 `/search`), 最大结果数默认为 `5` (结果数设置为 0 或负数默认为 5)
-    - 现在聊天中开启联网搜索后即可正常使用, 如若还无法使用, 一般为模型问题 (如 GPT-3.5 有时会无法理解)。
-    - 此联网搜索通过预设实现, 意为保证全模型都支持的通用功能, 兼容性无法保证灵敏性, 不依赖模型 Function Calling, 其他本身支持联网的模型可以选择直接关闭此功能。
-14. **为何我的 GPT-4-All 等逆向模型无法使用上传文件中的图片?**
+13. **为何我的 GPT-4-All 等逆向模型无法使用上传文件中的图片?**
     - 上传模型图片为 Base64 格式, 如果逆向不支持 Base64 格式, 请使用 URL 直链而非上传文件做法。
-15. **如何开始域名严格跨域检测?**
+14. **如何开始域名严格跨域检测?**
     - 正常情况下，后端对所有域名开放跨域。如果非特殊需求，无需开启严格跨域检测。
     - 如果需要开启严格跨域检测，可以在后端环境变量中 并配置 `ALLOW_ORIGINS`, 如 `ALLOW_ORIGINS=chatnio.net,chatnio.app` （不需要加协议前缀, www 解析无需手动添加, 后端将自动识别并允许跨域）, 这样就会支持严格跨域检测 (如 *http://www.chatnio.app*, *https://chatnio.net* 等将会被允许, 其他域名将会被拒绝)。
     - 即使在开启严格跨域检测的情况下, /v1 接口会被仍然允许所有域的跨域请求, 以保证中转 API 的正常使用。
-16. **模型映射功能是如何使用的？**
+15. **模型映射功能是如何使用的？**
     - 渠道内的模型映射格式为 `[from]>[to]`, 多个映射之间换行, **from** 为请求的模型, **to** 为真实向上游发送的模型并且需要上游真实支持
     - 如: 我有一个逆向渠道, 填写 `gpt-4-all>gpt-4`, 则我的用户请求 **gpt-4-all** 模型到该渠道时, 后端则会模型映射至 **gpt-4** 向该渠道请求 **gpt-4**, 此时该渠道支持 2 个模型, **gpt-4** 和 **gpt-4-all** (本质上都为 **gpt-4**)
     - 如果我不想让我的这个逆向渠道影响到 **gpt-4** 的渠道组, 可以加前缀 `!gpt-4-all>gpt-4`, 该渠道 **gpt-4** 则会被忽略, 此时该渠道将只支持 1 个模型, **gpt-4-all** (但本质上为 **gpt-4**)
+
 ## 📦 技术栈
-- 前端: React + Radix UI + Tailwind CSS + Shadcn + Tremor + Redux
-- 后端: Golang + Gin + Redis + MySQL
-- 应用技术: PWA + WebSocket
+- 🥗 前端: React + Redux + Radix UI + Tailwind CSS
+- 🍎 后端: Golang + Gin + Redis + MySQL
+- 🍒 应用技术: PWA + WebSocket
 
+## 🤯 为什么写此项目 & 项目优势
+我们发现，市面上的 AIGC 商业站点，大多数都是偏向于前端轻量部署的项目，有精美的 UI 界面设计，
+比如 [Next Chat](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web) 的二开商业版本，
+由于其偏向个人私有化的设计，在二开商业化时有一定的局限性，呈现出一些问题，比如：
+  - **对话同步难**, 比如需要 WebDav 等服务，用户学习成本高，跨端实时同步困难。
+  - **计费不够完善**, 比如只支持弹性计费或只支持订阅制，无法满足不同用户的需求。
+  - **文件解析不便捷**, 比如只支持先在图床上传图片，返回站点后再在输入框中输入 URL 直链，无内置文件解析功能。
+  - **不支持对话 URL 分享**, 比如只支持对话截图分享，无法支持对话 URL 分享 (或仅支持 ShareGPT 等工具，无法对站点起到推广作用)。
+  - **渠道管理不够强大**, 比如后台仅支持 OpenAI 格式渠道，兼容其他格式渠道困难。且只能填入一个渠道，无法支持多渠道管理。
+  - **不支持 API 调用**, 比如只支持用户界面调用，无法支持 API 中转和管理。
 
-## 🎃 贡献者
-![Contributors](https://stats.deeptrain.net/contributor/Deeptrain-Community/chatnio/?column=6&theme=light)
+另一种是偏向于 API 分发的站点，有强大的分发系统，比如基于 [One API](https://github.com/songquanpeng/one-api) 等项目，
+这类项目虽然支持强大的 API 中转和管理，但是缺少界面设计，且缺少一些 C 端功能，比如：
+  - **用户界面不够丰富**, 比如只支持 API 调用，不内置用户界面聊天。用户界面聊天需要自行复制密钥并前往其他站点才能使用，这对于普通用户来说，学习成本较高。
+  - **没有订阅制**, 比如只支持弹性计费，缺少对 C 端用户的计费设计，无法满足用户的不同需求，对于无基础的用户来说，成本感知不够友好。
+  - **C 端功能不够丰富**, 比如只支持 API 调用，不支持对话同步，不支持对话分享，不支持文件解析等功能。
+  - **均衡负载不够强大**, 开源版不支持**权重**参数, 无法实现同优先级的渠道均衡负载分配概率 ([New API](https://github.com/Calcium-Ion/new-api) 也解决了此痛点, UI 也更美观)。
 
-## 📚 SDKs
-> API 分为中转 API 和 Chat Nio 独有功能 API
-> 
-> 中转 API 为 OpenAI 通用格式, 支持多种格式, 详见 OpenAI API 文档和 SDKs
-> 
-> 下方 SDKs 为 Chat Nio 独有功能 API 的 SDKs
+因此，我们希望能够将这两种项目的优势结合起来，做出一个既有强大的 API 分发系统，又有丰富的用户界面设计的项目，
+这样既能满足 C 端用户的需求，又能发展 B 端业务，提高用户体验，降低用户学习成本，提高用户粘性。
 
-- [JavaScript SDK](https://github.com/Deeptrain-Community/chatnio-api-node)
-- [Python SDK](https://github.com/Deeptrain-Community/chatnio-api-python)
-- [Golang SDK](https://github.com/Deeptrain-Community/chatnio-api-go)
-- [Java SDK](https://github.com/hujiayucc/ChatNio-SDK-Java) (感谢 [@hujiayucc](https://github.com/hujiayucc))
-- [PHP SDK](https://github.com/hujiayucc/ChatNio-SDK-Php) (感谢 [@hujiayucc](https://github.com/hujiayucc))
-## ✨ 优秀开源项目
-> **此处偏前端项目指偏向用户聊天界面的项目, 偏后端项目指偏向于 API 中转和管理的项目, 一站式指包含用户聊天界面和 API 中转和管理的项目*
-- [Next Chat @yidadaa](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web) （偏前端项目）
-- [Lobe Chat @arvinxx](https://github.com/lobehub/lobe-chat) （偏前端项目）
-- [Chat Box @bin-huang](https://github.com/Bin-Huang/chatbox) （偏前端项目）
-- [OpenAI Forward @kenyony](https://github.com/KenyonY/openai-forward) （偏后端项目）
-- [One API @justsong](https://github.com/songquanpeng/one-api) （偏后端项目）
-- [New API @calon](https://github.com/Calcium-Ion/new-api) （偏后端项目）
-- [FastGPT @labring](https://github.com/labring/FastGPT) （知识库）
-- [Quivr @quivrhq](https://github.com/StanGirard/quivr) （知识库）
-- [Bingo @weaigc](https://github.com/weaigc/bingo) （模型库）
-- [Midjourney Proxy @novicezk](https://github.com/novicezk/midjourney-proxy) （模型库）
+于是，**CoAI.Dev** 应运而生，我们希望能够做出一个既有强大的 API 分发系统，又有丰富的用户界面设计的项目，成为下一代开源 AIGC 项目的商业一站式解决方案。
 
-
-## 📄 开源协议
-Apache License 2.0
 
 ## ❤ 捐助
-[@Sh1n3zZ](https://github.com/Sh1n3zZ) [@4EvEr](https://github.com/3081394176)
-
-- [晞云 LightXi](https://open.lightxi.com) 提供字体 CDN 支持
-- [BootCDN](https://bootcdn.cn) 和 [Static File](https://staticfile.org) 提供资源 CDN 支持
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=zmh-program/chatnio&type=Date)](https://star-history.com/#zmh-program/chatnio&Date)
-
-## 写在最后
-Chat Nio 偏向于一站式服务, 集合了用户聊天界面和 API 中转和管理的项目。
-- 相对于 NextChat 等偏前端轻量部署的项目,  Chat Nio 优势在于更便捷的云端同步、账号管理、更丰富的分享等功能, 以及计费管理系统。
-- 相对于 OneAPI 等偏后端轻量部署的项目,  Chat Nio 优势在于更丰富的用户界面, 同时渠道管理体系功能更多, 更丰富的用户管理, 并推出偏向用户界面的订阅管理系统。
-
-一站式服务的优势在于, 用户可以在一个站点上完成所有的操作, 无需频繁切换站点, 更加便捷。
-包括查看自己的点数, 消息的点数消耗, 订阅配额都更加便捷, 使用聊天界面的同时, 开放了中转 API 和 Chat Nio 独有功能 API。
-
-同时，我们力求做到 Chat Nio > Next Chat + One API, 实现更加丰富的功能和更加细节的体验。
-
-同时附加一点, 由于开发者仍然在上学, Chat Nio 的开发进度可能会受到影响。如果我们认为此 issue 为非必要, 我们将延后处理, 或者选择直接关闭, 不接受任何形式的催促。
-我们非常欢迎 PR 贡献, 并献上我们的感谢。
+如果您觉得这个项目对您有所帮助, 您可以点个 Star 支持一下！

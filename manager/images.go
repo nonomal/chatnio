@@ -1,17 +1,18 @@
 package manager
 
 import (
-	"chat/adapter/common"
+	adaptercommon "chat/adapter/common"
 	"chat/admin"
 	"chat/auth"
 	"chat/channel"
 	"chat/globals"
 	"chat/utils"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func ImagesRelayAPI(c *gin.Context) {
@@ -53,7 +54,7 @@ func ImagesRelayAPI(c *gin.Context) {
 		form.Model = strings.TrimSuffix(form.Model, "-official")
 	}
 
-	check := auth.CanEnableModel(db, user, form.Model)
+	check := auth.CanEnableModel(db, user, form.Model, []globals.Message{})
 	if check != nil {
 		sendErrorResponse(c, check, "quota_exceeded_error")
 		return
@@ -63,23 +64,27 @@ func ImagesRelayAPI(c *gin.Context) {
 }
 
 func getImageProps(form RelayImageForm, messages []globals.Message, buffer *utils.Buffer) *adaptercommon.ChatProps {
-	return &adaptercommon.ChatProps{
+	return adaptercommon.CreateChatProps(&adaptercommon.ChatProps{
 		Model:     form.Model,
 		Message:   messages,
 		MaxTokens: utils.ToPtr(-1),
-		Buffer:    *buffer,
-	}
+	}, buffer)
 }
 
-func getUrlFromBuffer(buffer *utils.Buffer) string {
+func getImageDataFromBuffer(buffer *utils.Buffer) (string, string) {
 	content := buffer.Read()
 
-	_, urls := utils.ExtractImages(content, true)
+	urls := utils.ExtractImagesFromMarkdown(content)
 	if len(urls) > 0 {
-		return urls[len(urls)-1]
+		return urls[len(urls)-1], ""
 	}
 
-	return ""
+	base64Data := utils.ExtractBase64FromMarkdown(content)
+	if len(base64Data) > 0 {
+		return "", base64Data[len(base64Data)-1]
+	}
+
+	return "", ""
 }
 
 func createRelayImageObject(c *gin.Context, form RelayImageForm, prompt string, created int64, user *auth.User, plan bool) {
@@ -99,7 +104,7 @@ func createRelayImageObject(c *gin.Context, form RelayImageForm, prompt string, 
 		return nil
 	})
 
-	admin.AnalysisRequest(form.Model, buffer, err)
+	admin.AnalyseRequest(form.Model, buffer, err)
 	if err != nil {
 		auth.RevertSubscriptionUsage(db, cache, user, form.Model)
 		globals.Warn(fmt.Sprintf("error from chat request api: %s (instance: %s, client: %s)", err, form.Model, c.ClientIP()))
@@ -112,8 +117,8 @@ func createRelayImageObject(c *gin.Context, form RelayImageForm, prompt string, 
 		CollectQuota(c, user, buffer, plan, err)
 	}
 
-	image := getUrlFromBuffer(buffer)
-	if image == "" {
+	url, b64Json := getImageDataFromBuffer(buffer)
+	if url == "" && b64Json == "" {
 		sendErrorResponse(c, fmt.Errorf("no image generated"), "image_generation_error")
 		return
 	}
@@ -122,7 +127,8 @@ func createRelayImageObject(c *gin.Context, form RelayImageForm, prompt string, 
 		Created: created,
 		Data: []RelayImageData{
 			{
-				Url: image,
+				Url:     url,
+				B64Json: b64Json,
 			},
 		},
 	})

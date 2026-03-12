@@ -108,12 +108,42 @@ type RelayImageForm struct {
 }
 
 type RelayImageData struct {
-	Url string `json:"url"`
+	Url     string `json:"url,omitempty"`
+	B64Json string `json:"b64_json,omitempty"`
 }
 
 type RelayImageResponse struct {
 	Created int64            `json:"created"`
 	Data    []RelayImageData `json:"data"`
+}
+
+type RelayVideoForm struct {
+	Model          string  `json:"model"`
+	Prompt         string  `json:"prompt" binding:"required"`
+	Seconds        *string `json:"seconds,omitempty"`
+	Size           *string `json:"size,omitempty"`
+	InputReference *string `json:"input_reference,omitempty"`
+}
+
+type RelayVideoError struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type RelayVideoJob struct {
+	CompletedAt        *int64           `json:"completed_at,omitempty"`
+	CreatedAt          int64            `json:"created_at"`
+	Error              *RelayVideoError `json:"error,omitempty"`
+	ExpiresAt          *int64           `json:"expires_at,omitempty"`
+	Id                 string           `json:"id"`
+	Model              string           `json:"model"`
+	Object             string           `json:"object"`
+	Progress           *int             `json:"progress,omitempty"`
+	Prompt             string           `json:"prompt"`
+	RemixedFromVideoId *string          `json:"remixed_from_video_id,omitempty"`
+	Seconds            string           `json:"seconds"`
+	Size               string           `json:"size"`
+	Status             string           `json:"status"`
 }
 
 func transformContent(content interface{}) string {

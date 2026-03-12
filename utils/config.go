@@ -3,14 +3,20 @@ package utils
 import (
 	"chat/globals"
 	"fmt"
+	"os"
+	"strings"
+	"sync"
+
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"strings"
 )
 
 var configFile = "config/config.yaml"
+var configTmpFile = "config/config.tmp.yaml"
+var configBackupFile = "config/config.bak.yaml"
 var configExampleFile = "config.example.yaml"
+var configMutex sync.Mutex
 
 var redirectRoutes = []string{
 	"/v1",
@@ -18,34 +24,42 @@ var redirectRoutes = []string{
 	"/attachments",
 }
 
-func ReadConf() {
-	viper.SetConfigFile(configFile)
+func SaveConfig(key string, value interface{}) error {
+	// save config to file with mutex lock
+	configMutex.Lock()
+	defer configMutex.Unlock()
 
-	if !IsFileExist(configFile) {
-		fmt.Println(fmt.Sprintf("[service] config.yaml not found, creating one from template: %s", configExampleFile))
-		if err := CopyFile(configExampleFile, configFile); err != nil {
-			fmt.Println(err)
-		}
+	if err := viper.WriteConfigAs(configBackupFile); err != nil {
+		return err
 	}
 
 	if err := viper.ReadInConfig(); err != nil {
-		panic(err)
+		return err
 	}
 
-	viper.AutomaticEnv()
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-}
+	currentConfig := viper.AllSettings()
 
-func NewEngine() *gin.Engine {
-	if viper.GetBool("debug") {
-		return gin.Default()
+	currentConfig[key] = value
+
+	for k, v := range currentConfig {
+		viper.Set(k, v)
 	}
 
-	gin.SetMode(gin.ReleaseMode)
+	if err := viper.WriteConfigAs(configTmpFile); err != nil {
+		return err
+	}
 
-	engine := gin.New()
-	engine.Use(gin.Recovery())
-	return engine
+	if _, err := os.Stat(configFile); err == nil {
+		if removeErr := os.Remove(configFile); removeErr != nil {
+			return removeErr
+		}
+	}
+
+	if err := os.Rename(configTmpFile, configFile); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func ApplySeo(title, icon string) {
@@ -62,7 +76,7 @@ func ApplySeo(title, icon string) {
 	}
 
 	if len(title) > 0 {
-		content = strings.ReplaceAll(content, "Chat Nio", title)
+		content = strings.ReplaceAll(content, "CoAI.Dev", title)
 		content = strings.ReplaceAll(content, "chatnio", strings.ToLower(title))
 	}
 

@@ -6,8 +6,11 @@ export type CommonResponse = {
 
 export type InfoResponse = {
   billing_today: number;
+  billing_yesterday: number;
   billing_month: number;
+  billing_last_month: number;
   subscription_count: number;
+  online_chats: number;
 };
 
 export type ModelChartResponse = {
@@ -104,6 +107,7 @@ export type UserData = {
   used_quota: number;
   is_subscribed: boolean;
   total_month: number;
+  expired_at: string;
   level: number;
   enterprise: boolean;
 };

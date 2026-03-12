@@ -26,6 +26,8 @@ export type Channel = {
     username: string;
     password: string;
   };
+  first_message_as_user?: boolean;
+  merge_consecutive_user_messages?: boolean;
 };
 
 export enum proxyType {
@@ -66,6 +68,9 @@ export const ChannelTypes: Record<string, string> = {
   groq: "Groq Cloud",
   bing: "New Bing",
   slack: "Slack Claude",
+  deepseek: "深度求索 DeepSeek",
+  coze: "扣子 Coze",
+  dify: "Dify",
 };
 
 export const ShortChannelTypes: Record<string, string> = {
@@ -85,6 +90,9 @@ export const ShortChannelTypes: Record<string, string> = {
   groq: "Groq",
   bing: "Bing",
   slack: "Slack",
+  deepseek: "DeepSeek",
+  coze: "Coze",
+  dify: "Dify",
 };
 
 export const ChannelInfos: Record<string, ChannelInfo> = {
@@ -116,6 +124,9 @@ export const ChannelInfos: Record<string, ChannelInfo> = {
       "gpt-4-32k-0613",
       "gpt-4o",
       "gpt-4o-2024-05-13",
+      "gpt-4o-mini",
+      "gpt-4o-2024-08-06",
+      "gpt-4o-mini-2024-07-18",
       "dalle",
       "dall-e-2",
       "dall-e-3",
@@ -219,7 +230,7 @@ export const ChannelInfos: Record<string, ChannelInfo> = {
     models: ["baichuan-53b"],
   },
   skylark: {
-    endpoint: "https://maas-api.ml-platform-cn-beijing.volces.com",
+    endpoint: "https://ark.cn-beijing.volces.com/api/v3",
     format: "<access-key>|<secret-key>",
     models: [
       "skylark-lite-public",
@@ -228,8 +239,8 @@ export const ChannelInfos: Record<string, ChannelInfo> = {
       "skylark-chat",
     ],
     description:
-      "> Skylark 格式密钥请填写获取到的 ak|sk \n" +
-      "> 接入点填写生成的接入点，如 *https://maas-api.ml-platform-cn-beijing.volces.com* \n" +
+      "> Skylark 格式密钥请填写获取到的 ak|sk 或 apikey \n" +
+      "> 接入点填写生成的接入点，如 *https://ark.cn-beijing.volces.com/api/v3* \n" +
       "> Skylark API 的地域字段无需手动填写，系统会自动根据接入点获取 \n",
   },
   bing: {
@@ -237,7 +248,7 @@ export const ChannelInfos: Record<string, ChannelInfo> = {
     format: "<secret>",
     models: ["bing-creative", "bing-balanced", "bing-precise"],
     description:
-      "> New Bing 服务搭建详情请参考 [chatnio-bing-service](https://github.com/Deeptrain-Community/chatnio-bing-service) \n " +
+      "> New Bing 服务搭建详情请参考 [chatnio-bing-service](https://github.com/coaidev/chatnio-bing-service) \n " +
       "> bing2api (如 [bingo](https://github.com/weaigc/bingo)) 可直接使用 **OpenAI** 格式而非 **New Bing** 格式 \n " +
       "> 接入点填写你部署的站点即可，如 *http://localhost:8765* ",
   },
@@ -277,6 +288,31 @@ export const ChannelInfos: Record<string, ChannelInfo> = {
     endpoint: "https://api.groq.com/openai",
     format: "<api-key>",
     models: ["llama2-70b-4096", "mixtral-8x7b-32768", "gemma-7b-it"],
+  },
+  deepseek: {
+    endpoint: "https://api.deepseek.com",
+    format: "<api-key>",
+    models: ["deepseek-chat", "deepseek-reasoner"],
+  },
+  coze: {
+    endpoint: "https://api.coze.cn",
+    format: "<api-key>",
+    models: [""],
+    description:
+      "> 扣子 Coze 的模型名称即为 Coze 平台的 **bot_id** \n" +
+      "> 进入智能体的开发页面，开发页面 URL 中 bot 参数后的数字就是智能体 ID \n" +
+      "> 例如 [https://www.coze.cn/space/341****/bot/73428668*****](https://www.coze.cn/space/341****/bot/73428668*****)，智能体 ID 为 73428668***** \n" +
+      "> 确保当前使用的访问密钥已被授予智能体所属空间的 chat 权限 \n" +
+      "> 如果需要让系统自动适配扣子 Coze 平台的图标，请在 **模型映射** 中将 **bot_id** 映射为 **coze** 开头的模型，如 coze-chat>73428668***** \n",
+  },
+  dify: {
+    endpoint: "https://api.dify.ai/v1",
+    format: "<api-key>",
+    models: [""],
+    description:
+      "> 由于 Dify 平台一个 Key 对应一个 CHATFLOW （模型），所以模型名称仅在用户调用本系统时用于标识用户调用的对象，不代表调用 Dify 平台 CHATFLOW 时被调用 CHATFLOW 的名称 \n" +
+      "> 因此，您需要为每一个 Dify 平台的 CHATFLOW 分别创建渠道 \n" +
+      "> 如果需要让系统自动适配 Dify 平台的图标，请将模型名称填写为 **dify** 开头的模型，如 **dify-chat** \n",
   },
 };
 

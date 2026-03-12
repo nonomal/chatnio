@@ -21,20 +21,30 @@ type ComboBoxProps = {
   value: string;
   onChange: (value: string) => void;
   list: string[];
+  listTranslated?: string;
+  listFormatter?: (value: string) => any;
   placeholder?: string;
   defaultOpen?: boolean;
   className?: string;
+  classNameContent?: string;
   align?: "start" | "end" | "center" | undefined;
+  hideSearchBar?: boolean;
+  icon?: React.ReactNode;
 };
 
 export function Combobox({
   value,
   onChange,
   list,
+  listTranslated,
+  listFormatter,
   placeholder,
   defaultOpen,
   className,
+  classNameContent,
   align,
+  hideSearchBar,
+  icon,
 }: ComboBoxProps) {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(defaultOpen ?? false);
@@ -45,6 +55,15 @@ export function Combobox({
     return [...set];
   }, [list]);
 
+  const formatter = React.useMemo(() => {
+    if (listFormatter) {
+      return listFormatter;
+    }
+
+    return (value: string) =>
+      listTranslated ? t(`${listTranslated}.${value}`) : value;
+  }, [listFormatter, listTranslated]);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -52,15 +71,20 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
+          unClickable
           className={cn("w-[320px] max-w-[60vw] justify-between", className)}
         >
-          {value || (placeholder ?? "")}
+          {icon}
+          {(value ? formatter(value) : placeholder) ?? ""}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[320px] max-w-[60vw] p-0" align={align}>
+      <PopoverContent
+        className={cn("w-[320px] max-w-[60vw] p-0", classNameContent)}
+        align={align}
+      >
         <Command>
-          <CommandInput placeholder={placeholder} />
+          {!hideSearchBar && <CommandInput placeholder={placeholder} />}
           <CommandEmpty>{t("admin.empty")}</CommandEmpty>
           <CommandList>
             {valueList.map((key) => (
@@ -68,6 +92,8 @@ export function Combobox({
                 key={key}
                 value={key}
                 onSelect={() => {
+                  if (key === value) return setOpen(false);
+
                   onChange(key);
                   setOpen(false);
                 }}
@@ -78,7 +104,7 @@ export function Combobox({
                     key === value ? "opacity-100" : "opacity-0",
                   )}
                 />
-                {key}
+                {formatter(key)}
               </CommandItem>
             ))}
           </CommandList>
